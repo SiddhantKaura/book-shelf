@@ -16,6 +16,13 @@ type ITunesEbook = {
   description?: string;
 };
 
+export type ShelfEntry = {
+    bookId: string;
+    status: "want-to-read" | "reading" | "finished";
+    rating?: number;
+    review?: string;
+}
+
 // iTunes descriptions contain both HTML tags (<b>, <i>) and HTML entities
 // (&#xa0;, &amp;, ...) — two separate things. Strip tags first (while they're
 // still literal "<...>" text), then decode entities into real characters.
