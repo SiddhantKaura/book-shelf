@@ -1,15 +1,19 @@
-import { searchBooks } from "../../lib/books";
-import { getCustomBooks } from "../../lib/customBooks";
+import type { Metadata } from "next";
+import { searchAllBooks } from "../../lib/books";
 import { addBookAction } from "./actions";
 // Kept for reference/learning — see LEARNINGS.md Phase 5 for the three-way
 // comparison (Server Action vs. traditional form vs. client-side fetch).
 // import { AddBookClientForm } from "./AddBookClientForm";
 import { BookBrowser } from "./BooksBrowser";
 
+export const metadata: Metadata = {
+  title: "Browse Books",
+  description: "Search books, add your own, and browse what's on the shelf.",
+};
+
 const Books = async({searchParams}: {searchParams: Promise<{q?:string}>}) => {
     const {q} = await searchParams;
-    const books = await searchBooks(q ?? "");
-    const customBooks = getCustomBooks();
+    const books = await searchAllBooks(q ?? "");
   return (
     <div className="mx-auto w-full max-w-4xl px-6 py-16">
       <h1 className="mb-10 text-center font-serif text-4xl font-bold text-amber-950 dark:text-amber-100">
@@ -17,7 +21,7 @@ const Books = async({searchParams}: {searchParams: Promise<{q?:string}>}) => {
       </h1>
       <details className="mb-10 rounded-lg border border-amber-200 bg-amber-50 p-6 dark:border-amber-900 dark:bg-zinc-900">
         <summary className="cursor-pointer font-serif text-lg font-semibold text-amber-950 dark:text-amber-100">
-          Add a book (Server Action)
+          Add a Book
         </summary>
         <form action={addBookAction} className="mt-4">
         <div className="grid gap-4 sm:grid-cols-2">
@@ -143,7 +147,7 @@ const Books = async({searchParams}: {searchParams: Promise<{q?:string}>}) => {
         <AddBookClientForm />
       </details>
       */}
-      <BookBrowser books={[...customBooks, ...books]} />
+      <BookBrowser books={books} />
     </div>
   )
 }

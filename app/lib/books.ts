@@ -1,4 +1,5 @@
 import he from "he";
+import { getCustomBooks } from "./customBooks";
 
 export type Book = {
   id: string;
@@ -51,8 +52,32 @@ export const searchBooks = async (
 };
 
 export const getBook = async (id: string): Promise<Book | undefined> => {
+  const customBook = getCustomBooks().find((book) => book.id === id);
+  if (customBook) {
+    return customBook;
+  }
+
   const res = await fetch(`https://itunes.apple.com/lookup?id=${encodeURIComponent(id)}`, {next: {revalidate: 3600}});
   const data = await res.json();
   const item: ITunesEbook | undefined = data.results?.[0];
   return item ? toBook(item) : undefined;
+};
+
+const matchesQuery = (book: Book, normalizedQuery: string): boolean =>
+  book.title.toLowerCase().includes(normalizedQuery) ||
+  book.author.toLowerCase().includes(normalizedQuery) ||
+  book.description.toLowerCase().includes(normalizedQuery);
+
+export const searchAllBooks = async (
+  query: string,
+  limit: number = 50
+): Promise<Book[]> => {
+  const apiResults = await searchBooks(query, limit);
+  const customResults = getCustomBooks();
+  const normalizedQuery = query.trim().toLowerCase();
+  const matchingCustom = normalizedQuery
+    ? customResults.filter((book) => matchesQuery(book, normalizedQuery))
+    : customResults;
+
+  return [...matchingCustom, ...apiResults];
 };

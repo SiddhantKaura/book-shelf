@@ -17,7 +17,7 @@ const SEED_BOOKS: Book[] = [
     id: "234",
     title: "My custom Book",
     author: "Sid",
-    coverUrl: "nothing",
+    coverUrl: "",
     description: "Only for coders",
   },
 ];
@@ -48,7 +48,7 @@ export const addCustomBook = ({
     title,
     author,
     description,
-    coverUrl: "nothing",
+    coverUrl: "",
   };
   books.push(newBook);
   writeCustomBooks(books);

@@ -1,10 +1,26 @@
 import Link from "next/link";
 import {getBook } from "@/app/lib/books";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+import { ShelfControls } from "../ShelfControls";
 
 interface BookProps {
     params: Promise<{id: string}>
 };
+
+export async function generateMetadata({ params }: BookProps): Promise<Metadata> {
+  const { id } = await params;
+  const book = await getBook(id);
+
+  if (!book) {
+    return { title: "Book not found" };
+  }
+
+  return {
+    title: book.title,
+    description: book.description || `${book.title} by ${book.author}`,
+  };
+}
 
 const Book = async ({params}: BookProps) => {
     const {id} = await params;
@@ -30,6 +46,7 @@ const Book = async ({params}: BookProps) => {
       <p className="mt-6 leading-relaxed text-amber-900/90 dark:text-amber-100/70">
         {book.description}
       </p>
+      <ShelfControls bookId={book.id} />
     </div>
   )
 }
