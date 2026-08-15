@@ -1,5 +1,5 @@
-import { searchBooks } from "../lib/books";
-import { getCustomBooks } from "../lib/customBooks";
+import { searchBooks } from "../../lib/books";
+import { getCustomBooks } from "../../lib/customBooks";
 import { addBookAction } from "./actions";
 // Kept for reference/learning — see LEARNINGS.md Phase 5 for the three-way
 // comparison (Server Action vs. traditional form vs. client-side fetch).

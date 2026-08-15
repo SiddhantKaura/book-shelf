@@ -10,6 +10,9 @@ export default function Home() {
         Track what you&apos;re reading, rate what you&apos;ve finished, and
         discover your next favorite book.
       </p>
+      <Link href="/api/fake-login">
+      Login
+      </Link>
       <Link
         href="/books"
         className="rounded-full bg-zinc-900 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-200"

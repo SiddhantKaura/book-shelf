@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { addCustomBook } from "../lib/customBooks";
+import { addCustomBook } from "../../lib/customBooks";
 
 export const addBookAction = async (formData:  FormData) => {
     const title = formData.get("title");

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { Book } from "../lib/books";
+import { Book } from "../../lib/books";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export const BookBrowser = ({ books }: { books: Book[] }) => {
