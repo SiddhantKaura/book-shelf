@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { DUMMY_BOOKS } from "@/app/lib/books";
+import {getBook } from "@/app/lib/books";
 import { notFound } from "next/navigation";
 
 interface BookProps {
@@ -8,15 +8,13 @@ interface BookProps {
 
 const Book = async ({params}: BookProps) => {
     const {id} = await params;
-    // Temporary artificial delay to visualize loading.tsx — remove once Phase 3 adds a real API call.
-    await new Promise((res) => setTimeout(res, 2000));
-    const book = DUMMY_BOOKS.find((book) => book.id === id);
+    const book = await getBook(id);
 
     if(!book){
         notFound();
     }
   return (
-    <div className="mx-auto max-w-2xl px-6 py-16">
+    <div className="mx-auto w-full max-w-2xl px-6 py-16">
       <Link
         href="/books"
         className="text-sm text-amber-800 hover:underline dark:text-amber-300"
