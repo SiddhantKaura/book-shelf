@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { addCustomBook, getCustomBooks } from "@/app/lib/customBooks";
 
 export const GET = async () => {
-  return NextResponse.json(getCustomBooks());
+  return NextResponse.json(await getCustomBooks());
 };
 
 export const POST = async (request: Request) => {
@@ -15,7 +15,7 @@ export const POST = async (request: Request) => {
       return NextResponse.json({ error: "Title and author are required" }, { status: 400 });
     }
 
-    addCustomBook({
+    await addCustomBook({
       title,
       author,
       description: typeof description === "string" ? description : "",

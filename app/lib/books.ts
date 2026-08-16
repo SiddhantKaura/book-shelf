@@ -52,7 +52,8 @@ export const searchBooks = async (
 };
 
 export const getBook = async (id: string): Promise<Book | undefined> => {
-  const customBook = getCustomBooks().find((book) => book.id === id);
+  const customBooks = await getCustomBooks();
+  const customBook = customBooks.find((book) => book.id === id);
   if (customBook) {
     return customBook;
   }
@@ -73,7 +74,7 @@ export const searchAllBooks = async (
   limit: number = 50
 ): Promise<Book[]> => {
   const apiResults = await searchBooks(query, limit);
-  const customResults = getCustomBooks();
+  const customResults = await getCustomBooks();
   const normalizedQuery = query.trim().toLowerCase();
   const matchingCustom = normalizedQuery
     ? customResults.filter((book) => matchesQuery(book, normalizedQuery))

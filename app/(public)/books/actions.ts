@@ -11,6 +11,6 @@ export const addBookAction = async (formData:  FormData) => {
     if (typeof title !== "string" || !title.trim() || typeof author !== "string" || !author.trim() || typeof description !== "string") {
       return;
     }
-    addCustomBook({title, author, description});
+    await addCustomBook({title, author, description});
     revalidatePath('/books');
 };

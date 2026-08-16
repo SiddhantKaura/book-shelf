@@ -12,6 +12,10 @@ datasource db {
   provider = "postgresql"
 }
 
-model Ping {
-  id Int @id @default(autoincrement())
+model CustomBook {
+  id String @id
+  title String
+  author String
+  coverUrl String
+  description String
 }
